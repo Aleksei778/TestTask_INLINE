@@ -1,4 +1,17 @@
 services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./public:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - app-network
+
   db:
     image: mysql:8.0
     restart: always
@@ -12,6 +25,12 @@ services:
     volumes:
       - ./database.sql:/docker-entrypoint-initdb.d/mysql_data.sql
       - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   mysql_data:

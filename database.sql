@@ -3,8 +3,8 @@ CREATE DATABASE IF NOT EXISTS blog_db;
 USE blog_db;
 
 -- Создание таблицы "Записи"
-CREATE TABLE IF NOT EXISTS posts (
-    id INT PRIMARY KEY,
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     userId INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     body TEXT NOT NULL,
@@ -12,14 +12,14 @@ CREATE TABLE IF NOT EXISTS posts (
 );
 
 -- Создание таблицы "Комментарии"
-CREATE TABLE IF NOT EXISTS comments (
-    id INT PRIMARY KEY,
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     postId INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     body TEXT NOT NULL,
     email VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    FOREIGN KEY (postId)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (postId) REFERENCES posts(id)
 );
 
 -- Создание индексов для ускорения поиска

@@ -6,6 +6,8 @@ $searchQuery = isset($_GET['query']) ? trim($_GET['query']) : '';
 $searchResults = [];
 $errorMessage = '';
 
+$pdo = getDbConnection();
+
 if ($searchQuery && strlen($searchQuery) >= 3) {
     try {
         $query = "
@@ -14,18 +16,16 @@ if ($searchQuery && strlen($searchQuery) >= 3) {
         FROM posts p
         JOIN comments c ON p.id = c.postId
         WHERE c.body LIKE :search
-        ORDER BY p.id
+        ORDER BY p.id;
         ";
         
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':search', '%' . $searchQuery . '%', PDO::PARAM_STR);
+        $stmt->bindValue(':search', '%' . $searchQuery . '%', PDO::PARAM_STR);
         $stmt->execute();
         
         $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
     } catch (PDOException $pdo_e) {
-        $errorMessage = "Ошибка при выполнении запроса: " . $e->getMessage();
+        $errorMessage = "Ошибка при выполнении запроса: " . $pdo_e->getMessage();
     }
 } elseif ($searchQuery && strlen($searchQuery) < 3) {
     $errorMessage = "Запрос должен содержать минимум 3 символа!";
@@ -40,7 +40,7 @@ if ($searchQuery && strlen($searchQuery) >= 3) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тестовое задание INLINE</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
     <h1>Поиск записей по комментариям</h1>
@@ -52,7 +52,7 @@ if ($searchQuery && strlen($searchQuery) >= 3) {
     </div>
 
     <?php if ($errorMessage): ?>
-        <div class="error"><?php echo htmlspecialchars($searchQuery); ?></div>
+        <div class="error"><?php echo htmlspecialchars($errorMessage); ?></div>
     <?php endif; ?>
 
     <?php if ($searchQuery && strlen($searchQuery) >= 3): ?>
