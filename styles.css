@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.5;
+}
+.search-form {
+    margin-bottom: 30px;
+}
+.search-input {
+    padding: 8px;
+    width: 70%;
+    font-size: 16px;
+}
+.search-button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+.search-button:hover {
+    background-color: #45a049;
+}
+.error {
+    color: red;
+    margin-bottom: 20px;
+}
+.result-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.post-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.comment-body {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-left: 4px solid #4CAF50;
+}
+mark {
+    background-color: yellow;
+    padding: 2px 0;
+}
+.no-results {
+    color: #666;
+    font-style: italic;
+}

@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: blog_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: blog_user
+      MYSQL_PASSWORD: blog_password
+    volumes:
+      - ./database.sql:/docker-entrypoint-initdb.d/mysql_data.sql
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
